@@ -22,14 +22,15 @@ to either “delete” or “accept”
  ------------------------------------
  
  Symphony bundles used on the backend system
- 
+  
+ ```
  friendsofsymfony/rest-bundle
  jms/serializer-bundle
  nelmio/cors-bundle
  
  phpunit/phpunit
  guzzlehttp/guzzle
- 
+ ```
  ------------------------------------
  
  Endpoints
