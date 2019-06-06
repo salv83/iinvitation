@@ -46,3 +46,6 @@ to either “delete” or “accept”
   post_invitation_add        POST     ANY      ANY    /api/invitations/adds
  -------------------------- -------- -------- ------ ---------------------------------------------------
 ```
+
+Screenshot of the Client
+https://github.com/salv83/invitation/issues/1
