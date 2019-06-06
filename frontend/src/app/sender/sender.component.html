@@ -1,0 +1,88 @@
+<div *ngIf="showerrmsg" class="aler alert-danger">
+  <p>{{showerrmsg}}</p>
+</div>
+
+<div class="container align-items-center">
+  <div class="row" style="margin-top:10px; justify-content: center;">
+    <div class="card bg-dark text-white mb-3" style="padding:2%;">
+      <label>
+        Sender Name:
+      </label>
+      <form novalidate class="card-body">
+          <input (input)="senderValue=$event.target.value" type="text" id="name" name="name"
+            size="50">
+          <button class="btn btn-success" (click)="senderAreaEmpty">Invitation List</button>
+        </form>
+    </div>
+    <div class="card bg-dark text-white mb-3" style="margin-left:10px; padding:2%;">
+      <label>
+        Search:
+      </label>
+      <form novalidate class="card-body">
+        <input (input)="valueSearch=$event.target.value" type="text" id="searchValue" name="searchValue" size="50"
+          #searchField>
+        <button class="btn btn-success" (click)="search()">SEARCH</button>
+        <div *ngIf="searchOK" class="aler alert-danger">
+          <div *ngIf="searchresults" class="aler alert-warning">
+            <div *ngFor="let item of searchresults;">
+              <i style="margin-right:5px;" class="fa fa-paper-plane" aria-hidden="true"></i>Sender:
+              {{item.senderName}}<br>
+              <i style="margin-right:5px;" class="fa fa-user" aria-hidden="true"></i>Invited:
+              {{item.invitedName}}<br>
+              <i style="margin-right:5px;" class="fa fa-commenting" aria-hidden="true"></i>Message:
+              {{item.message}}<br>
+              <i style="margin-right:5px;" class="fa fa-info-circle" aria-hidden="true"></i>Status:
+              {{statusDisplay(item.status)}}<br>
+              <hr>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+
+  <div class="card bg-dark text-white mb-3" style="padding:2%;">
+    <label>
+      Send an Invitation:
+    </label>
+    <form novalidate (submit)="save(f)" #f="ngForm" class="card-body">
+      <div class="form-group">
+        <input type="text" [(ngModel)]="invitedName" name="invitedName" required class="form-control bg-dark text-white"
+          placeholder="* Invited Name" #invitedField>
+      </div>
+      <div class="form-group">
+        <input type="text" [(ngModel)]="message" name="message" required class="form-control bg-dark text-white"
+          placeholder="* Message" #messageField>
+      </div>
+      <div class="btn-group btn-group-sm m-1">
+        <button class="btn btn-warning" type="submit" [disabled]="f.invalid">
+          SEND
+        </button>
+        <button class="btn btn-light" type="button" (click)="invitedField.value=''; messageField.value='';">
+          RESET
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="senderAreaEmpty()>0">
+    <div class="bg-dark text-white mb-3">
+      <div *ngFor="let invitation of invitations" class="list-group-item list-group-item-action"
+        [ngClass]="{'bg-warning text-dark' : invitation.id === active?.id}" (click)="setActive(invitation)">
+        <div *ngIf="invitation.senderName === senderValue">
+          <i style="margin-right:5px;" class="fa fa-paper-plane" aria-hidden="true"></i>Sender:
+          {{invitation.senderName}}<br>
+          <div class="pull-right"><i class="fa fa-trash icon" (click)='delete ($event, invitation)'></i></div>
+          <i style="margin-right:5px;" class="fa fa-user" aria-hidden="true"></i>Invited:
+          {{invitation.invitedName}}<br>
+          <i style="margin-right:5px;" class="fa fa-commenting" aria-hidden="true"></i>Message:
+          {{invitation.message}}<br>
+          <i style="margin-right:5px;" class="fa fa-info-circle" aria-hidden="true"></i>Status:
+          {{statusDisplay(invitation.status)}}<br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
